@@ -25,19 +25,21 @@ function span(progress: number, start: number, end: number) {
 }
 
 const phases = [
-  { id: "intro", from: 0, index: "01", title: "Once", line: "Three answers. Then it fits." },
-  { id: "sizes", from: 0.16, index: "02", title: "Sizes", line: "Coat to boot." },
-  { id: "brands", from: 0.38, index: "03", title: "Houses", line: "Names you wear." },
-  { id: "budget", from: 0.6, index: "04", title: "Spend", line: "A range per piece." },
-  { id: "done", from: 0.82, index: "05", title: "Ready", line: "Already yours." },
+  { id: "intro", from: 0, index: "01", title: "Once", line: "Size, cloth, brands. Then it knows." },
+  { id: "sizes", from: 0.12, index: "02", title: "Sizes", line: "What actually fits." },
+  { id: "brands", from: 0.3, index: "03", title: "Houses", line: "Yours, and a few you don’t know yet." },
+  { id: "materials", from: 0.48, index: "04", title: "Cloth", line: "What it’s made of." },
+  { id: "budget", from: 0.66, index: "05", title: "Spend", line: "What you’ll pay." },
+  { id: "done", from: 0.84, index: "06", title: "Ready", line: "The season, already edited." },
 ] as const;
 
 /** Hold each card, then ease into the next across a visible stretch of scroll. */
 const blends = [
-  [0.1, 0.22],
-  [0.32, 0.44],
-  [0.54, 0.66],
-  [0.76, 0.88],
+  [0.08, 0.16],
+  [0.26, 0.34],
+  [0.44, 0.52],
+  [0.62, 0.7],
+  [0.8, 0.88],
 ] as const;
 
 function screenAt(progress: number) {
@@ -68,6 +70,15 @@ const brandChoices = [
 
 const brandOn = [true, true, true, true, true, false] as const;
 
+const materials = [
+  { name: "Wool", on: true },
+  { name: "Cotton", on: true },
+  { name: "Cashmere", on: true },
+  { name: "Leather", on: true },
+  { name: "Linen", on: true },
+  { name: "Polyester", on: false },
+] as const;
+
 function phaseFor(progress: number) {
   for (let i = phases.length - 1; i >= 0; i -= 1) {
     if (progress >= phases[i].from) return phases[i];
@@ -84,9 +95,10 @@ export function KnowsYou() {
     offset: ["start start", "end end"],
   });
 
-  const sizesProgress = useTransform(progress, (p) => span(p, 0.24, 0.32));
-  const brandsProgress = useTransform(progress, (p) => span(p, 0.46, 0.54));
-  const budgetProgress = useTransform(progress, (p) => span(p, 0.68, 0.76));
+  const sizesProgress = useTransform(progress, (p) => span(p, 0.18, 0.25));
+  const brandsProgress = useTransform(progress, (p) => span(p, 0.36, 0.43));
+  const materialsProgress = useTransform(progress, (p) => span(p, 0.54, 0.61));
+  const budgetProgress = useTransform(progress, (p) => span(p, 0.72, 0.79));
   const screenIndex = useTransform(progress, screenAt);
 
   useMotionValueEvent(progress, "change", (value) => {
@@ -95,7 +107,7 @@ export function KnowsYou() {
   });
 
   return (
-    <section ref={sectionRef} id="knows" className="relative h-[420vh]">
+    <section ref={sectionRef} id="knows" className="relative h-[500vh]">
       <div className="sticky top-[4.5rem] h-[calc(100svh-4.5rem)] overflow-hidden">
         <div
           aria-hidden
@@ -115,7 +127,7 @@ export function KnowsYou() {
                 className="mt-4"
               >
                 <p className="font-serif text-sm text-primary">{phase.index}</p>
-                <h2 className="text-display mt-2 font-serif text-[clamp(2.6rem,5vw,4.2rem)] leading-[0.95]">
+                <h2 className="text-display mt-2 font-serif text-[clamp(2.6rem,5vw,4.2rem)] leading-[1.08]">
                   {phase.title}
                 </h2>
                 <p className="mt-3 text-base text-ink-soft sm:text-lg">{phase.line}</p>
@@ -152,6 +164,7 @@ export function KnowsYou() {
               <IntroScreen active={screenIndex} />
               <SizesScreen progress={sizesProgress} active={screenIndex} />
               <BrandsScreen progress={brandsProgress} active={screenIndex} />
+              <MaterialsScreen progress={materialsProgress} active={screenIndex} />
               <BudgetScreen progress={budgetProgress} active={screenIndex} />
               <DoneScreen active={screenIndex} />
             </SetupCard>
@@ -207,7 +220,7 @@ function Screen({
 }
 
 function IntroScreen({ active }: { active: MotionValue<number> }) {
-  const steps = ["Sizes", "Houses", "Spend"];
+  const steps = ["Sizes", "Houses", "Cloth", "Spend"];
 
   return (
     <Screen index={0} active={active}>
@@ -216,7 +229,7 @@ function IntroScreen({ active }: { active: MotionValue<number> }) {
         {steps.map((step, index) => (
           <li key={step} className="flex items-baseline gap-4 border-b border-line py-4">
             <span className="w-6 font-serif text-sm text-primary">{`0${index + 1}`}</span>
-            <span className="font-serif text-[2.6rem] leading-none text-ink">{step}</span>
+            <span className="font-serif text-[2.15rem] leading-none text-ink">{step}</span>
           </li>
         ))}
       </ul>
@@ -370,6 +383,63 @@ function BrandRow({
   );
 }
 
+function MaterialsScreen({
+  progress,
+  active,
+}: {
+  progress: MotionValue<number>;
+  active: MotionValue<number>;
+}) {
+  return (
+    <Screen index={3} active={active} inset={false} className="pt-8">
+      <p className="px-8 text-[11px] tracking-[0.22em] text-ink-soft uppercase">Cloth</p>
+      <ul className="mt-4 flex flex-1 flex-col">
+        {materials.map((material, index) => (
+          <MaterialRow key={material.name} material={material} index={index} progress={progress} />
+        ))}
+      </ul>
+    </Screen>
+  );
+}
+
+function MaterialRow({
+  material,
+  index,
+  progress,
+}: {
+  material: (typeof materials)[number];
+  index: number;
+  progress: MotionValue<number>;
+}) {
+  const lit = useTransform(progress, (p) => (material.on ? clamp01((p - index * 0.1) / 0.16) : 0));
+  const wash = useTransform(lit, (v) => `rgba(243,235,225,${v * 0.95})`);
+  const mark = useTransform(lit, (v) => v);
+
+  return (
+    <motion.li
+      className="flex min-h-14 flex-1 items-center justify-between border-b border-line/80 px-8"
+      style={{ backgroundColor: wash }}
+    >
+      <span className="font-serif text-[1.65rem] leading-none text-ink">{material.name}</span>
+      <motion.span
+        aria-hidden
+        className="grid size-5 place-items-center rounded-full bg-ink text-canvas"
+        style={{ opacity: mark, scale: mark }}
+      >
+        <svg viewBox="0 0 12 12" className="size-3" fill="none">
+          <path
+            d="M2.6 6.2 4.8 8.4 9.4 3.6"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </motion.span>
+    </motion.li>
+  );
+}
+
 function BudgetScreen({
   progress,
   active,
@@ -385,7 +455,7 @@ function BudgetScreen({
   const seasonY = useTransform(progress, [0.55, 0.82], [10, 0]);
 
   return (
-    <Screen index={3} active={active}>
+    <Screen index={4} active={active}>
       <div>
         <p className="text-[11px] tracking-[0.22em] text-ink-soft uppercase">Per piece</p>
         <p className="mt-5 font-serif text-[3.4rem] leading-none tracking-tight text-ink">
@@ -416,11 +486,12 @@ function DoneScreen({ active }: { active: MotionValue<number> }) {
   const facts = [
     { label: "Sizes", value: "38 · S · 36 · 39" },
     { label: "Houses", value: "Five names" },
+    { label: "Cloth", value: "No polyester" },
     { label: "Spend", value: "€80 – €380" },
   ];
 
   return (
-    <Screen index={4} active={active} className="justify-between">
+    <Screen index={5} active={active} className="justify-between">
       <div>
         <p className="text-[11px] tracking-[0.22em] text-ink-soft uppercase">Saved</p>
         <ul className="mt-4">

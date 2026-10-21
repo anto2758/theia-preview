@@ -16,7 +16,7 @@ const lora = Lora({
 export const metadata: Metadata = {
   title: "Lyra",
   description:
-    "Lyra will be a personal edit of outfits: collections for the season, new drops from the brands you wear, and a swipe for the looks you want to keep.",
+    "Lyra is clothes, already in your taste. A few outfits for the season you’re in: your size, your brands, and a few you don’t know yet.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

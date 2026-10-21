@@ -9,19 +9,19 @@ const chapters = [
     src: "/looks/fall-brown-coat.jpg",
     position: "object-[center_28%]",
     title: "Brown coat",
-    copy: "What is worth wearing now.",
+    copy: "Earthy, this week. Not the whole site.",
   },
   {
     src: "/looks/editorial/camel-coat.jpg",
     position: "object-[center_32%]",
     title: "Camel",
-    copy: "One look, when it is time to choose.",
+    copy: "The cut you actually wear.",
   },
   {
     src: "/looks/editorial/cashmere.jpg",
     position: "object-center",
     title: "Cashmere",
-    copy: "Only from the names you wear.",
+    copy: "A name you haven’t tried.",
   },
 ];
 
@@ -46,26 +46,27 @@ export default function Home() {
             />
           </Reveal>
           <Reveal className="lg:col-span-5 lg:pb-4" delay={0.08}>
-            <p className="text-sm text-primary">01 — The edit</p>
+            <p className="text-sm text-primary">01 · The point</p>
             <h2 className="text-display mt-4 font-serif text-4xl leading-[1.08] text-balance sm:text-5xl">
-              Not a catalogue. An edit.
+              Not another catalogue.
             </h2>
             <p className="mt-6 max-w-md text-lg leading-8 text-ink-soft">
-              Collections gather what is worth wearing now. A camel coat. A grey wool. Whatever
-              just dropped from the brands already in your wardrobe.
+              You don’t scroll a hundred videos to find one you’d like. Clothes still work that
+              way: one brand’s site, then the next. Lyra opens with a few outfits in your taste,
+              your size, and the season you’re actually in.
             </p>
             <div className="mt-10 grid grid-cols-3 gap-6 border-t border-line pt-6">
               <div>
-                <p className="text-display-soft font-serif text-3xl">18</p>
-                <p className="mt-2 text-sm leading-6 text-ink-soft">Outfits in a season.</p>
+                <p className="text-display-soft font-serif text-3xl">Few</p>
+                <p className="mt-2 text-sm leading-6 text-ink-soft">Looks, not hundreds.</p>
               </div>
               <div>
                 <p className="text-display-soft font-serif text-3xl">1</p>
-                <p className="mt-2 text-sm leading-6 text-ink-soft">Look on screen.</p>
+                <p className="mt-2 text-sm leading-6 text-ink-soft">Place to open.</p>
               </div>
               <div>
                 <p className="text-display-soft font-serif text-3xl">Yours</p>
-                <p className="mt-2 text-sm leading-6 text-ink-soft">The names you wear.</p>
+                <p className="mt-2 text-sm leading-6 text-ink-soft">Taste, size, brands.</p>
               </div>
             </div>
           </Reveal>
@@ -94,7 +95,7 @@ export default function Home() {
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(42,36,28,0.62)] via-[rgba(42,36,28,0.12)] to-transparent" />
           <Reveal y={24} amount={0.4} className="absolute inset-x-0 bottom-0 px-6 pb-12 sm:pb-16">
             <p className="mx-auto max-w-3xl font-serif text-4xl leading-[1.12] text-balance text-canvas sm:text-6xl">
-              Dressing, decided before you open the wardrobe.
+              Fall, without opening every site.
             </p>
           </Reveal>
         </section>
@@ -109,8 +110,8 @@ export default function Home() {
           <div>
             <p className="text-display font-serif text-3xl">Lyra</p>
             <p className="mt-5 max-w-md text-base leading-7 text-ink-soft sm:text-lg">
-              A personal edit of what to wear. Collections for the season you are in, new drops
-              from the brands already in your wardrobe, and one finished look at a time.
+              Shopping, tailored the way the rest of the internet already is. A few outfits for the
+              season you’re in: your taste, your measurements, your brands.
             </p>
           </div>
           <address className="text-sm leading-7 text-ink-soft not-italic lg:justify-self-end">

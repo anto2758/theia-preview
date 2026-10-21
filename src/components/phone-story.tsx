@@ -19,7 +19,7 @@ function clamp01(value: number) {
   return Math.min(1, Math.max(0, value));
 }
 
-/** Smoothstep — each beat eases instead of scrubbing linearly. */
+/** Smoothstep: each beat eases instead of scrubbing linearly. */
 function smooth(t: number) {
   const x = clamp01(t);
   return x * x * (3 - 2 * x);
@@ -31,11 +31,11 @@ function span(progress: number, start: number, end: number) {
 }
 
 const phases = [
-  { id: "board", from: 0.12, index: "01", title: "Your collections", line: "A quiet board of the season." },
-  { id: "open", from: 0.26, index: "02", title: "Open one", line: "The park look. The one that fits today." },
-  { id: "swipe", from: 0.38, index: "03", title: "Pass, then keep", line: "One finished look at a time." },
-  { id: "pieces", from: 0.62, index: "04", title: "Every piece", line: "Coat, knit, bag, heel — priced." },
-  { id: "kept", from: 0.76, index: "05", title: "Into the bag", line: "The coat is ready to keep." },
+  { id: "board", from: 0.12, index: "01", title: "Your collections", line: "A few looks for the weather you're in." },
+  { id: "open", from: 0.26, index: "02", title: "Open one", line: "Already in your size. Already your taste." },
+  { id: "swipe", from: 0.38, index: "03", title: "Pass, then keep", line: "One look. Not a hundred pants." },
+  { id: "pieces", from: 0.62, index: "04", title: "Every piece", line: "The coat, the knit, the boot." },
+  { id: "kept", from: 0.76, index: "05", title: "Into the bag", line: "Keep it. From the brand, not their site." },
 ] as const;
 
 const bagItem = {
@@ -142,11 +142,12 @@ function StoryHero({ opacity }: { opacity: MotionValue<number> }) {
       >
         <div className="mx-auto w-full max-w-6xl">
           <p className="text-[11px] tracking-[0.28em] text-primary uppercase">The season · A/W 26</p>
-          <h1 className="text-display mt-5 max-w-[14ch] font-serif text-[clamp(3.4rem,8vw,6.6rem)] leading-[0.94] text-balance">
-            Lyra will know what you want to wear.
+          <h1 className="text-display mt-5 max-w-[16ch] font-serif text-[clamp(3.4rem,8vw,6.6rem)] leading-[1.05] text-balance">
+            Clothes, already in your taste.
           </h1>
-          <p className="mt-6 max-w-sm text-base leading-7 text-ink-soft sm:text-lg">
-            A short edit for the season you are in, and the brands you already wear.
+          <p className="mt-6 max-w-md text-base leading-7 text-ink-soft sm:text-lg">
+            Everything else you open is tailored. Shopping still isn’t. Lyra is a few outfits that
+            fit your size, your brands, and this weather, instead of every catalogue.
           </p>
         </div>
       </motion.div>
@@ -206,7 +207,7 @@ function StoryCaption({
           className="max-w-md"
         >
           <p className="text-[11px] text-primary">{phase.index}</p>
-          <p className="text-display-soft mt-2 font-serif text-2xl leading-none sm:text-3xl">{phase.title}</p>
+          <p className="text-display-soft mt-2 font-serif text-2xl leading-snug sm:text-3xl">{phase.title}</p>
           <p className="mt-2 text-sm text-ink-soft">{phase.line}</p>
         </motion.div>
       </AnimatePresence>
@@ -239,7 +240,7 @@ export function PhoneStory() {
   const heroOpacity = useTransform(progress, (p) => 1 - span(p, 0, 0.08));
   const chromeOpacity = useTransform(progress, (p) => span(p, 0.14, 0.22));
 
-  // Grow from the crown so extra scale falls off the bottom — a peek, not a crop.
+  // Grow from the crown so extra scale falls off the bottom: a peek, not a crop.
   const phoneScale = useTransform(progress, (p) => {
     const enter = span(p, 0.06, 0.18);
     const settle = span(p, 0.78, 0.95);
@@ -298,7 +299,7 @@ export function PhoneStory() {
         <StoryHero opacity={heroOpacity} />
         <StoryMarkers phase={phase} opacity={chromeOpacity} />
 
-        {/* Air above the crown, air below for the caption — the phone never kisses a clip. */}
+        {/* Air above the crown, air below for the caption. The phone never kisses a clip. */}
         <div className="absolute inset-x-0 top-10 bottom-40 z-10 flex items-end justify-center px-4 [perspective:1400px] sm:items-center">
           <motion.div
             className="aspect-[1406/2822] h-full max-h-full w-auto max-w-[min(88vw,26rem)] origin-top will-change-transform"

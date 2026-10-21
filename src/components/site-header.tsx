@@ -49,7 +49,7 @@ export function SiteHeader() {
           transition={{ duration: 0.3, ease }}
         />
 
-        {/* Liquid glass — lighter frosted wash */}
+        {/* Liquid glass, lighter frosted wash */}
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0"
@@ -96,7 +96,7 @@ export function SiteHeader() {
               The names
             </a>
             <a href="#edit" className="hover:text-ink">
-              The edit
+              The point
             </a>
           </nav>
         </div>

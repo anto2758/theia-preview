@@ -4,7 +4,7 @@
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-lora), ui-serif, Georgia, serif;
-  /* Slightly warmer autumn ivory — still minimal, not cream-terracotta. */
+  /* Slightly warmer autumn ivory. Still minimal, not cream-terracotta. */
   --color-canvas: #faf7f2;
   --color-secondary: #f3ebe1;
   --color-surface: #f6f1e9;
@@ -41,14 +41,15 @@
 }
 
 @utility gradient-blur {
-  /* Keep moderate — heavy blur on a large layer tanks scroll scrubbing. */
+  /* Keep moderate. Heavy blur on a large layer tanks scroll scrubbing. */
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   -webkit-mask-image: linear-gradient(to top, #000 12%, transparent 96%);
   mask-image: linear-gradient(to top, #000 12%, transparent 96%);
 }
 
-/* Soft ink → cognac wash on display type — barely there. */
+/* Soft ink to cognac wash on display type. Barely there.
+   box-decoration-break + padding keeps descenders (y, g, p) inside the clip. */
 @utility text-display {
   background-image: linear-gradient(
     165deg,
@@ -58,7 +59,12 @@
   );
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding-block: 0.14em;
+  margin-block: -0.14em;
 }
 
 @utility text-display-soft {
@@ -70,7 +76,12 @@
   );
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding-block: 0.14em;
+  margin-block: -0.14em;
 }
 
 body {

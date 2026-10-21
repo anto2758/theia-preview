@@ -22,12 +22,12 @@ export function BrandMarquee() {
     <section id="names" className="group relative py-20 sm:py-28">
       <div className="mx-auto w-full max-w-6xl px-6">
         <p className="text-[11px] tracking-[0.28em] text-primary uppercase">The names</p>
-        <h2 className="text-display mt-4 max-w-[16ch] font-serif text-4xl leading-[1.08] text-balance sm:text-5xl">
-          The houses in the first edit.
+        <h2 className="text-display mt-4 max-w-[18ch] font-serif text-4xl leading-[1.08] text-balance sm:text-5xl">
+          One taste. Every brand.
         </h2>
         <p className="mt-5 max-w-md text-base leading-7 text-ink-soft sm:text-lg">
-          The brands we are opening with — already in a quiet wardrobe, and the ones we are
-          bringing in.
+          The names you already wear, and the ones that dress the same way. You don’t start over
+          on each site.
         </p>
       </div>
 
