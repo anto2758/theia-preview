@@ -26,11 +26,29 @@ function span(progress: number, start: number, end: number) {
 
 const phases = [
   { id: "intro", from: 0, index: "01", title: "Once", line: "Three answers. Then it fits." },
-  { id: "sizes", from: 0.18, index: "02", title: "Sizes", line: "Coat to boot." },
-  { id: "brands", from: 0.42, index: "03", title: "Houses", line: "Names you wear." },
-  { id: "budget", from: 0.66, index: "04", title: "Spend", line: "A range per piece." },
-  { id: "done", from: 0.88, index: "05", title: "Ready", line: "Already yours." },
+  { id: "sizes", from: 0.16, index: "02", title: "Sizes", line: "Coat to boot." },
+  { id: "brands", from: 0.38, index: "03", title: "Houses", line: "Names you wear." },
+  { id: "budget", from: 0.6, index: "04", title: "Spend", line: "A range per piece." },
+  { id: "done", from: 0.82, index: "05", title: "Ready", line: "Already yours." },
 ] as const;
+
+/** Hold each card, then ease into the next across a visible stretch of scroll. */
+const blends = [
+  [0.1, 0.22],
+  [0.32, 0.44],
+  [0.54, 0.66],
+  [0.76, 0.88],
+] as const;
+
+function screenAt(progress: number) {
+  let index = 0;
+  for (const [start, end] of blends) {
+    if (progress < start) return index;
+    if (progress < end) return index + smooth((progress - start) / (end - start));
+    index += 1;
+  }
+  return index;
+}
 
 const sizeRows = [
   { label: "Coat", options: ["34", "36", "38", "40"], pick: 2 },
@@ -66,16 +84,10 @@ export function KnowsYou() {
     offset: ["start start", "end end"],
   });
 
-  const sizesProgress = useTransform(progress, (p) => span(p, 0.2, 0.4));
-  const brandsProgress = useTransform(progress, (p) => span(p, 0.44, 0.64));
-  const budgetProgress = useTransform(progress, (p) => span(p, 0.68, 0.86));
-  const screenIndex = useTransform(progress, (p) => {
-    if (p < 0.18) return 0;
-    if (p < 0.42) return 1;
-    if (p < 0.66) return 2;
-    if (p < 0.88) return 3;
-    return 4;
-  });
+  const sizesProgress = useTransform(progress, (p) => span(p, 0.24, 0.32));
+  const brandsProgress = useTransform(progress, (p) => span(p, 0.46, 0.54));
+  const budgetProgress = useTransform(progress, (p) => span(p, 0.68, 0.76));
+  const screenIndex = useTransform(progress, screenAt);
 
   useMotionValueEvent(progress, "change", (value) => {
     const next = phaseFor(value);
@@ -136,7 +148,7 @@ export function KnowsYou() {
           </div>
 
           <div className="flex min-h-0 items-center justify-center lg:col-span-7 lg:justify-end">
-            <SetupCard screenIndex={screenIndex}>
+            <SetupCard>
               <IntroScreen active={screenIndex} />
               <SizesScreen progress={sizesProgress} active={screenIndex} />
               <BrandsScreen progress={brandsProgress} active={screenIndex} />
@@ -150,34 +162,15 @@ export function KnowsYou() {
   );
 }
 
-function SetupCard({
-  children,
-  screenIndex,
-}: {
-  children: ReactNode;
-  screenIndex: MotionValue<number>;
-}) {
+function SetupCard({ children }: { children: ReactNode }) {
   return (
-    <div className="relative h-[min(36rem,68svh)] w-full max-w-[22.5rem]">
+    <div className="relative h-[min(36rem,72svh)] w-full max-w-[30rem]">
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-x-8 -inset-y-10 rounded-full bg-[radial-gradient(circle,rgba(196,165,116,0.18)_0%,transparent_70%)] blur-2xl"
+        className="pointer-events-none absolute -inset-6 rounded-full bg-[radial-gradient(circle,rgba(196,165,116,0.16)_0%,transparent_70%)] blur-2xl"
       />
-      <div className="relative flex h-full flex-col overflow-hidden rounded-[1.85rem] border border-line/90 bg-canvas shadow-[0_30px_70px_rgba(42,36,28,0.08)]">
-        <Progress screenIndex={screenIndex} />
-        <div className="relative min-h-0 flex-1">{children}</div>
-      </div>
-    </div>
-  );
-}
-
-function Progress({ screenIndex }: { screenIndex: MotionValue<number> }) {
-  const width = useTransform(screenIndex, (value) => `${((clamp01(value) + 1) / phases.length) * 100}%`);
-
-  return (
-    <div className="px-6 pt-6">
-      <div className="h-px bg-line">
-        <motion.div className="h-full bg-ink/75" style={{ width }} />
+      <div className="relative h-full overflow-hidden rounded-xl border border-line bg-canvas shadow-[0_24px_50px_rgba(42,36,28,0.07)]">
+        {children}
       </div>
     </div>
   );
@@ -188,22 +181,25 @@ function Screen({
   active,
   children,
   className = "",
+  inset = true,
 }: {
   index: number;
   active: MotionValue<number>;
   children: ReactNode;
   className?: string;
+  inset?: boolean;
 }) {
   const opacity = useTransform(active, (value) => {
     const distance = Math.abs(value - index);
     if (distance >= 1) return 0;
-    return 1 - distance;
+    return 1 - smooth(distance);
   });
+  const y = useTransform(active, (value) => (index - value) * 72);
 
   return (
     <motion.div
-      className={`absolute inset-0 flex flex-col px-6 pt-6 pb-6 ${className}`}
-      style={{ opacity }}
+      className={`absolute inset-0 flex flex-col ${inset ? "px-8 pt-8 pb-8" : ""} ${className}`}
+      style={{ opacity, y }}
     >
       {children}
     </motion.div>
@@ -216,11 +212,11 @@ function IntroScreen({ active }: { active: MotionValue<number> }) {
   return (
     <Screen index={0} active={active}>
       <p className="text-[11px] tracking-[0.22em] text-ink-soft uppercase">Setup</p>
-      <ul className="flex flex-1 flex-col justify-center">
+      <ul className="mt-6">
         {steps.map((step, index) => (
-          <li key={step} className="flex items-baseline gap-4 border-b border-line py-5">
+          <li key={step} className="flex items-baseline gap-4 border-b border-line py-4">
             <span className="w-6 font-serif text-sm text-primary">{`0${index + 1}`}</span>
-            <span className="font-serif text-[2.15rem] leading-none text-ink">{step}</span>
+            <span className="font-serif text-[2.6rem] leading-none text-ink">{step}</span>
           </li>
         ))}
       </ul>
@@ -238,7 +234,7 @@ function SizesScreen({
   return (
     <Screen index={1} active={active}>
       <p className="text-[11px] tracking-[0.22em] text-ink-soft uppercase">Sizes</p>
-      <div className="flex flex-1 flex-col justify-center gap-6">
+      <div className="mt-8 flex flex-1 flex-col justify-between">
         {sizeRows.map((row, rowIndex) => (
           <SizeRow key={row.label} row={row} rowIndex={rowIndex} progress={progress} />
         ))}
@@ -299,7 +295,7 @@ function SizeChip({
 
   return (
     <motion.span
-      className="grid h-10 place-items-center rounded-full border font-serif text-[0.95rem] tabular-nums"
+      className="grid h-12 place-items-center rounded-full border font-serif text-lg tabular-nums"
       style={{ backgroundColor, color, borderColor }}
     >
       {label}
@@ -319,9 +315,9 @@ function BrandsScreen({
   active: MotionValue<number>;
 }) {
   return (
-    <Screen index={2} active={active} className="px-0 pb-0">
-      <p className="px-6 text-[11px] tracking-[0.22em] text-ink-soft uppercase">Houses</p>
-      <ul className="mt-3 flex flex-1 flex-col">
+    <Screen index={2} active={active} inset={false} className="pt-8">
+      <p className="px-8 text-[11px] tracking-[0.22em] text-ink-soft uppercase">Houses</p>
+      <ul className="mt-4 flex flex-1 flex-col">
         {brandChoices.map((brand, index) => (
           <BrandRow key={brand.name} brand={brand} index={index} progress={progress} />
         ))}
@@ -346,14 +342,14 @@ function BrandRow({
 
   return (
     <motion.li
-      className="flex min-h-12 flex-1 items-center justify-between border-b border-line/80 px-6"
+      className="flex min-h-14 flex-1 items-center justify-between border-b border-line/80 px-8"
       style={{ backgroundColor: wash }}
     >
       <img
         src={brand.src}
         alt={brand.name}
         draggable={false}
-        className="h-[1.15rem] w-auto max-w-[9.5rem] object-contain object-left opacity-80 grayscale"
+        className="h-6 w-auto max-w-[12rem] object-contain object-left opacity-80 grayscale"
       />
       <motion.span
         aria-hidden
@@ -390,9 +386,9 @@ function BudgetScreen({
 
   return (
     <Screen index={3} active={active}>
-      <div className="flex flex-1 flex-col justify-center">
+      <div>
         <p className="text-[11px] tracking-[0.22em] text-ink-soft uppercase">Per piece</p>
-        <p className="mt-4 font-serif text-[2.7rem] leading-none tracking-tight text-ink">
+        <p className="mt-5 font-serif text-[3.4rem] leading-none tracking-tight text-ink">
           €80
           <span className="mx-2 text-ink-soft/60">–</span>
           <motion.span>{highText}</motion.span>
@@ -424,10 +420,10 @@ function DoneScreen({ active }: { active: MotionValue<number> }) {
   ];
 
   return (
-    <Screen index={4} active={active} className="px-0 pb-0">
-      <div className="px-6">
+    <Screen index={4} active={active} className="justify-between">
+      <div>
         <p className="text-[11px] tracking-[0.22em] text-ink-soft uppercase">Saved</p>
-        <ul className="mt-5">
+        <ul className="mt-4">
           {facts.map((fact) => (
             <li key={fact.label} className="flex items-baseline justify-between gap-4 border-b border-line py-3">
               <span className="text-[11px] tracking-[0.18em] text-ink-soft uppercase">{fact.label}</span>
@@ -436,7 +432,7 @@ function DoneScreen({ active }: { active: MotionValue<number> }) {
           ))}
         </ul>
       </div>
-      <div className="mt-6 min-h-0 flex-1 overflow-hidden">
+      <div className="mt-5 min-h-0 flex-1 overflow-hidden rounded-[1.15rem]">
         <img
           src="/looks/swipe-gray-coat.jpg"
           alt=""
