@@ -1,0 +1,91 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-lora), ui-serif, Georgia, serif;
+  /* Slightly warmer autumn ivory — still minimal, not cream-terracotta. */
+  --color-canvas: #faf7f2;
+  --color-secondary: #f3ebe1;
+  --color-surface: #f6f1e9;
+  --color-muted: #ebe3d5;
+  --color-line: #e0d6c8;
+  --color-primary: #8a7349;
+  --color-primary-dark: #6e5b3a;
+  --color-accent: #c4a574;
+  --color-ink: #2a241c;
+  --color-ink-soft: #7a7164;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.brand-marquee {
+  animation: marquee 42s linear infinite;
+}
+
+.group:hover .brand-marquee {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee {
+    animation: none;
+  }
+}
+
+@utility gradient-blur {
+  /* Keep moderate — heavy blur on a large layer tanks scroll scrubbing. */
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  -webkit-mask-image: linear-gradient(to top, #000 12%, transparent 96%);
+  mask-image: linear-gradient(to top, #000 12%, transparent 96%);
+}
+
+/* Soft ink → cognac wash on display type — barely there. */
+@utility text-display {
+  background-image: linear-gradient(
+    165deg,
+    #2a241c 0%,
+    #2f2922 55%,
+    #4a3f32 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-display-soft {
+  background-image: linear-gradient(
+    180deg,
+    #2a241c 0%,
+    #353028 70%,
+    #524536 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+body {
+  background-color: var(--color-canvas);
+  background-image:
+    radial-gradient(ellipse 90% 55% at 78% -8%, rgba(196, 165, 116, 0.14), transparent 58%),
+    radial-gradient(ellipse 70% 45% at 8% 88%, rgba(138, 115, 73, 0.07), transparent 55%),
+    linear-gradient(180deg, #fbf8f3 0%, #faf7f2 45%, #f6f0e6 100%);
+  background-attachment: fixed;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Lenis owns wheel smoothing; keep native CSS scroll instant. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
