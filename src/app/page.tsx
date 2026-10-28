@@ -28,6 +28,10 @@ const chapters = [
 export default function Home() {
   return (
     <div className="relative overflow-x-clip text-ink">
+      {/* Impact ownership check — must appear in homepage HTML */}
+      <p className="sr-only" aria-hidden="true">
+        Impact-Site-Verification: 3000ddf6-dab5-43d3-bd30-a1ce1ef19731
+      </p>
       <SiteHeader />
 
       <main id="top" className="relative">

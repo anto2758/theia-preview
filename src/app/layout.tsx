@@ -22,12 +22,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable} ${lora.variable} h-full antialiased`}>
-      <head>
-        <meta 
-          name='impact-site-verification' 
-          content='3000ddf6-dab5-43d3-bd30-a1ce1ef19731'
-        />
-      </head>
       <body className="min-h-full font-sans">
         <MotionRoot>{children}</MotionRoot>
       </body>
