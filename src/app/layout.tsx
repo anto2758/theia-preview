@@ -23,10 +23,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable} ${lora.variable} h-full antialiased`}>
       <head>
-        <meta
-          name="impact-site-verification"
-          // Impact verifies via `value`, not `content`
-          {...{ value: "dbbde2b1-3342-4b99-af40-9790cae08ad6" }}
+        <meta 
+          name='impact-site-verification' 
+          content='3000ddf6-dab5-43d3-bd30-a1ce1ef19731'
         />
       </head>
       <body className="min-h-full font-sans">
