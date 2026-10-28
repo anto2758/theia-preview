@@ -225,11 +225,11 @@ function IntroScreen({ active }: { active: MotionValue<number> }) {
   return (
     <Screen index={0} active={active}>
       <p className="text-[11px] tracking-[0.22em] text-ink-soft uppercase">Setup</p>
-      <ul className="mt-6">
+      <ul className="mt-6 flex flex-1 flex-col">
         {steps.map((step, index) => (
-          <li key={step} className="flex items-baseline gap-4 border-b border-line py-4">
+          <li key={step} className="flex flex-1 items-center gap-4 border-b border-line">
             <span className="w-6 font-serif text-sm text-primary">{`0${index + 1}`}</span>
-            <span className="font-serif text-[2.15rem] leading-none text-ink">{step}</span>
+            <span className="font-serif text-[2.4rem] leading-none text-ink">{step}</span>
           </li>
         ))}
       </ul>
