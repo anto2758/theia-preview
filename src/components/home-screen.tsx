@@ -228,19 +228,25 @@ function CollectionTile({
         ref={tile.picked ? tileRef : undefined}
         type="button"
         onClick={(event) => onOpen(event.currentTarget)}
-        className="block w-full overflow-hidden rounded-[3.2cqw] bg-muted text-left"
-        style={{ height: tile.height }}
+        className="block w-full overflow-hidden rounded-[4.6cqw] border-[0.5px] border-black/[0.08] bg-surface p-[1.1cqw] text-left soft-shadow"
       >
-        <img
-          src={tile.src}
-          alt=""
-          draggable={false}
-          decoding="async"
-          className={`h-full w-full object-cover ${tile.position ?? "object-center"}`}
-        />
+        <div
+          className="overflow-hidden rounded-[3.4cqw] bg-muted"
+          style={{ height: tile.height }}
+        >
+          <img
+            src={tile.src}
+            alt=""
+            draggable={false}
+            decoding="async"
+            className={`h-full w-full object-cover ${tile.position ?? "object-center"}`}
+          />
+        </div>
+        <div className="px-[1.4cqw] pt-[1.8cqw] pb-[1.4cqw]">
+          <h3 className="font-medium text-[3.1cqw] leading-tight text-ink">{tile.title}</h3>
+          <p className="mt-[0.6cqw] text-[2.4cqw] text-ink-soft">{tile.meta}</p>
+        </div>
       </button>
-      <h3 className="mt-[1.5cqw] font-serif text-[3.5cqw] leading-tight text-ink">{tile.title}</h3>
-      <p className="mt-[0.5cqw] text-[2.55cqw] text-ink-soft">{tile.meta}</p>
     </article>
   );
 }
@@ -278,16 +284,16 @@ function ExpandCover({
         className={`h-full w-full object-cover ${tile.position ?? "object-center"}`}
       />
       <motion.div
-        className="absolute inset-x-0 bottom-0 h-[46%] bg-gradient-to-t from-[rgba(42,36,28,0.88)] via-[rgba(42,36,28,0.35)] to-transparent"
+        className="absolute inset-x-0 bottom-0 h-[46%] bg-gradient-to-t from-[rgba(17,17,17,0.82)] via-[rgba(17,17,17,0.32)] to-transparent"
         style={{ opacity: shadeOpacity }}
       />
       <motion.div
-        className="absolute right-[6.4cqw] bottom-[20cqw] left-[6.4cqw] text-canvas"
+        className="absolute right-[6.4cqw] bottom-[20cqw] left-[6.4cqw] text-on-primary"
         style={{ opacity: chromeOpacity }}
       >
-        <p className="text-[2.8cqw] text-canvas/80">Collection</p>
-        <h3 className="mt-[1cqw] font-serif text-[7cqw] leading-none">{tile.title}</h3>
-        <p className="mt-[1.6cqw] text-[2.9cqw] text-canvas/85">{tile.meta}</p>
+        <p className="text-[2.8cqw] text-on-primary/80">Collection</p>
+        <h3 className="mt-[1cqw] font-serif text-[7cqw] leading-none text-on-primary">{tile.title}</h3>
+        <p className="mt-[1.6cqw] text-[2.9cqw] text-on-primary/85">{tile.meta}</p>
       </motion.div>
     </motion.div>
   );
@@ -349,7 +355,7 @@ function SearchField({ visible, opacity }: { visible: boolean; opacity?: MotionV
         visibility: visible ? "visible" : "hidden",
       }}
     >
-      <div className="h-full w-full overflow-hidden rounded-full border border-line/70 bg-canvas/80 shadow-[0_1px_0_rgba(255,255,255,0.7)_inset] backdrop-blur-xl">
+      <div className="h-full w-full overflow-hidden rounded-full border-[0.5px] border-black/[0.08] bg-surface mini-soft-shadow">
         <SearchInput query={query} onChange={setQuery} onClear={() => setQuery("")} />
       </div>
     </motion.div>
@@ -358,7 +364,11 @@ function SearchField({ visible, opacity }: { visible: boolean; opacity?: MotionV
 
 function BoardSwitch({ board, onChange }: { board: BoardId; onChange: (board: BoardId) => void }) {
   return (
-    <div role="tablist" aria-label="Collections" className="mt-[3.2cqw] flex h-[5.8cqw] shrink-0 items-end gap-[5.4cqw]">
+    <div
+      role="tablist"
+      aria-label="Collections"
+      className="mt-[3.2cqw] inline-flex h-[8.2cqw] shrink-0 items-center rounded-full bg-surface/45 p-[0.7cqw] shadow-well"
+    >
       {boardTabs.map((tab) => {
         const active = tab.id === board;
         return (
@@ -368,10 +378,13 @@ function BoardSwitch({ board, onChange }: { board: BoardId; onChange: (board: Bo
             role="tab"
             aria-selected={active}
             onClick={() => onChange(tab.id)}
-            className={`relative border-0 bg-transparent pb-[1.25cqw] text-[3.9cqw] leading-none outline-none ${active ? "font-medium text-ink" : "text-ink-soft"}`}
+            className={`rounded-full border-0 px-[3.2cqw] py-[1.6cqw] text-[2.9cqw] leading-none outline-none ${
+              active
+                ? "bg-surface font-medium text-ink mini-soft-shadow"
+                : "bg-transparent font-medium text-ink-soft"
+            }`}
           >
             {tab.label}
-            <span className={`absolute inset-x-0 bottom-0 h-[0.38cqw] ${active ? "bg-ink" : "bg-transparent"}`} />
           </button>
         );
       })}

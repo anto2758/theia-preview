@@ -94,9 +94,9 @@ export default function Home() {
             alt="Camel tailored suit"
             className="absolute inset-0 h-full w-full object-cover object-[center_42%]"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(42,36,28,0.62)] via-[rgba(42,36,28,0.12)] to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[rgba(17,17,17,0.58)] via-[rgba(17,17,17,0.12)] to-transparent" />
           <Reveal y={24} amount={0.4} className="absolute inset-x-0 bottom-0 px-6 pb-12 sm:pb-16">
-            <p className="mx-auto max-w-3xl font-serif text-4xl leading-[1.12] text-balance text-canvas sm:text-6xl">
+            <p className="mx-auto max-w-3xl font-serif text-4xl leading-[1.12] text-balance text-on-primary sm:text-6xl">
               Fall, without opening every site.
             </p>
           </Reveal>

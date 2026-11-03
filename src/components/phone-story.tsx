@@ -63,14 +63,14 @@ function CheckoutPanel({ progress }: { progress: MotionValue<number> }) {
       className="pointer-events-none absolute top-1/2 right-[max(1rem,calc((100%-72rem)/2))] z-30 w-[min(22rem,34vw)] -translate-y-1/2 max-lg:right-4 max-lg:w-[min(18rem,42vw)]"
       style={{ opacity, x, y, scale }}
     >
-      <div className="overflow-hidden rounded-[1.6rem] border border-line/80 bg-canvas/90 shadow-[0_24px_60px_rgba(42,36,28,0.12)] backdrop-blur-xl">
-        <div className="border-b border-line/70 px-5 py-4">
-          <p className="text-[10px] tracking-[0.28em] text-primary uppercase">Your bag</p>
+      <div className="overflow-hidden rounded-2xl border-[0.5px] border-black/[0.08] bg-surface soft-shadow">
+        <div className="border-b border-black/[0.06] px-5 py-4">
+          <p className="text-[11px] text-ink-soft">Your bag</p>
           <p className="mt-1 font-serif text-2xl text-ink">Ready to keep</p>
         </div>
 
         <div className="flex gap-4 px-5 py-5">
-          <div className="relative h-36 w-28 shrink-0 overflow-hidden rounded-[1rem] bg-muted">
+          <div className="relative h-36 w-28 shrink-0 overflow-hidden rounded-[11px] bg-muted">
             <img
               src={bagItem.src}
               alt=""
@@ -80,7 +80,7 @@ function CheckoutPanel({ progress }: { progress: MotionValue<number> }) {
             />
           </div>
           <div className="min-w-0 flex-1 pt-1">
-            <p className="font-serif text-[0.95rem] tracking-[0.2em] text-ink uppercase">{bagItem.brand}</p>
+            <p className="text-[11px] font-medium text-ink">{bagItem.brand}</p>
             <p className="mt-2 text-sm text-ink-soft">{bagItem.name}</p>
             <p className="mt-3 font-serif text-xl text-ink">{bagItem.price}</p>
             <div className="mt-4 flex gap-1.5">
@@ -89,8 +89,8 @@ function CheckoutPanel({ progress }: { progress: MotionValue<number> }) {
                   key={size}
                   className={`grid h-8 w-8 place-items-center rounded-full text-[11px] ${
                     size === bagItem.size
-                      ? "bg-ink text-canvas"
-                      : "border border-line text-ink-soft"
+                      ? "bg-primary text-on-primary mini-soft-shadow"
+                      : "border-[0.5px] border-black/[0.1] bg-secondary text-ink-soft"
                   }`}
                 >
                   {size}
@@ -100,7 +100,7 @@ function CheckoutPanel({ progress }: { progress: MotionValue<number> }) {
           </div>
         </div>
 
-        <div className="space-y-3 border-t border-line/70 px-5 py-4">
+        <div className="space-y-3 border-t border-black/[0.06] px-5 py-4">
           <div className="flex items-center justify-between text-sm text-ink-soft">
             <span>Subtotal</span>
             <span className="tabular-nums text-ink">{bagItem.price}</span>
@@ -112,9 +112,12 @@ function CheckoutPanel({ progress }: { progress: MotionValue<number> }) {
           <button
             type="button"
             tabIndex={-1}
-            className="mt-1 flex h-11 w-full items-center justify-center rounded-full bg-ink text-[12px] tracking-[0.18em] text-canvas uppercase"
+            className="mt-1 flex h-12 w-full items-center justify-between rounded-[11px] bg-primary px-5 text-[14px] font-medium text-on-primary mini-soft-shadow"
           >
             Place order
+            <span className="grid size-7 place-items-center rounded-[7px] bg-white/10 text-[16px] leading-none text-on-primary">
+              ›
+            </span>
           </button>
           <p className="pb-1 text-center text-[11px] leading-5 text-ink-soft">
             Ships in 2–4 days · Free returns
@@ -170,7 +173,7 @@ function StoryMarkers({
           return (
             <div key={item.id} className="flex items-center gap-3">
               <span
-                className={`h-1.5 w-1.5 rounded-full transition-colors duration-500 ${active ? "bg-primary" : "bg-line"}`}
+                className={`h-1.5 w-1.5 rounded-full transition-colors duration-500 ${active ? "bg-primary" : "bg-faint/40"}`}
               />
               <span
                 className={`font-serif text-sm transition-colors duration-500 ${active ? "text-ink" : "text-ink-soft/50"}`}
@@ -291,9 +294,9 @@ export function PhoneStory() {
           className="pointer-events-none absolute inset-0"
           style={{ opacity: glowOpacity }}
         >
-          <div className="absolute top-[-10%] left-1/2 h-[70vmax] w-[70vmax] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(196,165,116,0.26)_0%,rgba(138,115,73,0.1)_42%,rgba(250,247,242,0)_70%)]" />
-          <div className="absolute top-[18%] left-[12%] h-[28vmax] w-[28vmax] rounded-full bg-[radial-gradient(circle,rgba(243,235,225,0.95)_0%,rgba(250,247,242,0)_70%)] blur-2xl" />
-          <div className="absolute top-[22%] right-[10%] h-[24vmax] w-[24vmax] rounded-full bg-[radial-gradient(circle,rgba(232,214,186,0.55)_0%,rgba(250,247,242,0)_72%)] blur-2xl" />
+          <div className="absolute top-[-10%] left-1/2 h-[70vmax] w-[70vmax] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.7)_0%,rgba(251,251,250,0)_68%)]" />
+          <div className="absolute top-[18%] left-[12%] h-[28vmax] w-[28vmax] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.85)_0%,rgba(251,251,250,0)_70%)] blur-2xl" />
+          <div className="absolute top-[22%] right-[10%] h-[24vmax] w-[24vmax] rounded-full bg-[radial-gradient(circle,rgba(247,247,246,0.8)_0%,rgba(251,251,250,0)_72%)] blur-2xl" />
         </motion.div>
 
         <StoryHero opacity={heroOpacity} />

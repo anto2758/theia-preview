@@ -131,27 +131,27 @@ function LookCaption({
       <motion.div className="absolute inset-x-0 bottom-0 overflow-hidden" style={{ height: panelHeight }}>
         <div className="gradient-blur absolute inset-0" />
         <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-[rgba(42,36,28,0.96)] from-15% via-[rgba(42,36,28,0.62)] via-55% to-transparent"
+          className="absolute inset-0 bg-gradient-to-t from-[rgba(17,17,17,0.92)] from-15% via-[rgba(17,17,17,0.55)] via-55% to-transparent"
           style={{ opacity: shadeOpacity }}
         />
       </motion.div>
       <motion.div
-        className="absolute right-[5.6cqw] left-[5.6cqw] text-canvas"
+        className="absolute right-[5.6cqw] left-[5.6cqw] text-on-primary"
         style={{ bottom: contentBottom, y: contentY }}
       >
-        <p className="text-[2.8cqw] text-canvas/80">{held ? "Collection" : look.brand}</p>
+        <p className="text-[2.8cqw] text-on-primary/80">{held ? "Collection" : look.brand}</p>
         <div className="mt-[1cqw] flex items-end justify-between gap-[2.8cqw]">
           <h3 className="min-w-0 flex-1 font-serif text-[6.4cqw] leading-[0.95]">{look.title}</h3>
           <motion.button
             type="button"
-            className="pointer-events-auto mb-[0.4cqw] shrink-0 rounded-full border border-canvas/45 bg-canvas/14 px-[2.8cqw] py-[1.4cqw] text-[2.2cqw] font-medium tracking-wide text-canvas backdrop-blur-sm"
+            className="pointer-events-auto mb-[0.4cqw] shrink-0 rounded-full border border-on-primary/45 bg-on-primary/14 px-[2.8cqw] py-[1.4cqw] text-[2.2cqw] font-medium text-on-primary backdrop-blur-sm"
             style={{ opacity: actionsOpacity }}
             tabIndex={-1}
           >
             Save to collection
           </motion.button>
         </div>
-        <motion.p className="mt-[1.4cqw] text-[2.9cqw] text-canvas/85" style={{ opacity: lineOpacity }}>
+        <motion.p className="mt-[1.4cqw] text-[2.9cqw] text-on-primary/85" style={{ opacity: lineOpacity }}>
           {held ? "12 outfits" : look.pieces}
         </motion.p>
         <motion.div className="overflow-hidden" style={{ height: listHeight, opacity: listOpacity }}>
@@ -159,7 +159,7 @@ function LookCaption({
             {look.items.map((item) => (
               <div
                 key={item.name}
-                className="flex items-center gap-[2.8cqw] border-b border-canvas/20 py-[1.5cqw]"
+                className="flex items-center gap-[2.8cqw] border-b border-on-primary/20 py-[1.5cqw]"
               >
                 <img
                   src={item.src}
@@ -170,13 +170,13 @@ function LookCaption({
                 />
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-serif text-[3.3cqw] leading-none">{item.name}</p>
-                  <p className="mt-[1cqw] text-[2.6cqw] tabular-nums text-canvas/80">{item.price}</p>
+                  <p className="mt-[1cqw] text-[2.6cqw] tabular-nums text-on-primary/80">{item.price}</p>
                 </div>
                 <button
                   type="button"
                   aria-label={`Add ${item.name}`}
                   tabIndex={-1}
-                  className="pointer-events-auto grid size-[5.4cqw] shrink-0 place-items-center rounded-full border border-canvas/55 text-canvas"
+                  className="pointer-events-auto grid size-[5.4cqw] shrink-0 place-items-center rounded-full border border-on-primary/55 text-on-primary"
                 >
                   <svg viewBox="0 0 12 12" className="size-[2.6cqw]" aria-hidden="true">
                     <path
@@ -233,30 +233,30 @@ export function DiscoverScreen({
   useMotionValueEvent(offset, "change", syncOffset);
 
   return (
-    <div className="relative h-full overflow-hidden bg-ink text-canvas">
+    <div className="relative h-full overflow-hidden bg-ink text-on-primary">
       {LOOKS.map((look, index) => (
         <LookPhoto key={look.title} look={look} index={index} offset={offset} />
       ))}
 
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-[22%] bg-gradient-to-b from-[rgba(42,36,28,0.28)] to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-[22%] bg-gradient-to-b from-[rgba(17,17,17,0.28)] to-transparent" />
 
       <LookCaption look={LOOKS[front]} active detail={open} held={front === 0} />
 
-      <p className="absolute left-[7cqw] top-[7.4cqw] z-30 text-[3.15cqw] font-medium text-canvas drop-shadow-[0_1px_2px_rgba(42,36,28,0.35)]">
+      <p className="absolute left-[7cqw] top-[7.4cqw] z-30 text-[3.15cqw] font-medium text-on-primary drop-shadow-[0_1px_2px_rgba(17,17,17,0.35)]">
         9:41
       </p>
-      <p className="absolute top-[7.6cqw] right-[7cqw] z-30 text-[2.8cqw] text-canvas/90">
+      <p className="absolute top-[7.6cqw] right-[7cqw] z-30 text-[2.8cqw] text-on-primary/90">
         {step} / {LOOKS.length}
       </p>
 
       <motion.p
-        className="absolute top-[28cqw] left-[7cqw] z-30 rounded-full border border-canvas/40 px-[3.2cqw] py-[1.2cqw] text-[3cqw] text-canvas"
+        className="absolute top-[28cqw] left-[7cqw] z-30 rounded-full border border-on-primary/40 px-[3.2cqw] py-[1.2cqw] text-[3cqw] text-on-primary"
         style={{ opacity: passOpacity }}
       >
         Pass
       </motion.p>
       <motion.p
-        className="absolute top-[28cqw] right-[7cqw] z-30 rounded-full bg-primary px-[3.2cqw] py-[1.2cqw] text-[3cqw] text-canvas"
+        className="absolute top-[28cqw] right-[7cqw] z-30 rounded-full bg-surface px-[3.2cqw] py-[1.2cqw] text-[3cqw] font-medium text-ink mini-soft-shadow"
         style={{ opacity: keepOpacity }}
       >
         Keep

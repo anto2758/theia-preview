@@ -71,7 +71,7 @@ export default function PartnersPage() {
           </Reveal>
         </section>
 
-        <section className="border-y border-line bg-secondary/40">
+        <section className="border-y border-line bg-secondary">
           <div className="mx-auto w-full max-w-6xl px-6 py-16 sm:py-20">
             <Reveal>
               <p className="text-sm text-primary">01 · In the app</p>

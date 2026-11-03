@@ -111,7 +111,7 @@ export function KnowsYou() {
       <div className="sticky top-[4.5rem] h-[calc(100svh-4.5rem)] overflow-hidden">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_55%_42%_at_72%_18%,rgba(196,165,116,0.16),transparent_58%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_55%_42%_at_72%_18%,rgba(255,255,255,0.7),transparent_58%)]"
         />
 
         <div className="relative mx-auto grid h-full w-full max-w-6xl grid-rows-[auto_minmax(0,1fr)] items-center gap-6 px-6 py-8 lg:grid-cols-12 lg:grid-rows-1 lg:gap-16 lg:py-10">
@@ -180,9 +180,9 @@ function SetupCard({ children }: { children: ReactNode }) {
     <div className="relative h-[min(36rem,72svh)] w-full max-w-[30rem]">
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-6 rounded-full bg-[radial-gradient(circle,rgba(196,165,116,0.16)_0%,transparent_70%)] blur-2xl"
+        className="pointer-events-none absolute -inset-6 rounded-full bg-[radial-gradient(circle,rgba(17,17,17,0.05)_0%,transparent_70%)] blur-2xl"
       />
-      <div className="relative h-full overflow-hidden rounded-xl border border-line bg-canvas shadow-[0_24px_50px_rgba(42,36,28,0.07)]">
+      <div className="relative h-full overflow-hidden rounded-2xl border-[0.5px] border-black/[0.08] bg-surface soft-shadow">
         {children}
       </div>
     </div>
@@ -298,12 +298,16 @@ function SizeChip({
   rowStart: number;
 }) {
   const lit = useTransform(progress, (p) => (selected ? clamp01((p - rowStart - 0.06) / 0.14) : 0));
-  const backgroundColor = useTransform(lit, (v) => `rgba(42,36,28,${selected ? v : 0})`);
+  const backgroundColor = useTransform(lit, (v) =>
+    selected ? `rgba(28,29,31,${v})` : "rgba(255,255,255,0)",
+  );
   const color = useTransform(lit, (v) =>
-    selected ? `rgb(${mix(122, 250, v)}, ${mix(113, 247, v)}, ${mix(100, 242, v)})` : "rgb(122,113,100)",
+    selected
+      ? `rgb(${mix(102, 255, v)}, ${mix(101, 255, v)}, ${mix(96, 255, v)})`
+      : "rgb(102,101,96)",
   );
   const borderColor = useTransform(lit, (v) =>
-    selected ? `rgba(42,36,28,${0.14 + v * 0.86})` : "rgba(224,214,200,1)",
+    selected ? `rgba(0,0,0,${0.08 + v * 0.12})` : "rgba(0,0,0,0.08)",
   );
 
   return (
@@ -350,12 +354,12 @@ function BrandRow({
 }) {
   const on = brandOn[index];
   const lit = useTransform(progress, (p) => (on ? clamp01((p - index * 0.1) / 0.16) : 0));
-  const wash = useTransform(lit, (v) => `rgba(243,235,225,${v * 0.95})`);
+  const wash = useTransform(lit, (v) => `rgba(249,249,247,${v})`);
   const mark = useTransform(lit, (v) => v);
 
   return (
     <motion.li
-      className="flex min-h-14 flex-1 items-center justify-between border-b border-line/80 px-8"
+      className="flex min-h-14 flex-1 items-center justify-between border-b border-black/[0.06] px-8"
       style={{ backgroundColor: wash }}
     >
       <img
@@ -366,7 +370,7 @@ function BrandRow({
       />
       <motion.span
         aria-hidden
-        className="grid size-[1.15rem] place-items-center rounded-full bg-ink text-canvas"
+        className="grid size-[1.15rem] place-items-center rounded-full bg-primary text-on-primary"
         style={{ opacity: mark, scale: mark }}
       >
         <svg viewBox="0 0 12 12" className="size-2.5" fill="none">
@@ -412,18 +416,18 @@ function MaterialRow({
   progress: MotionValue<number>;
 }) {
   const lit = useTransform(progress, (p) => (material.on ? clamp01((p - index * 0.1) / 0.16) : 0));
-  const wash = useTransform(lit, (v) => `rgba(243,235,225,${v * 0.95})`);
+  const wash = useTransform(lit, (v) => `rgba(249,249,247,${v})`);
   const mark = useTransform(lit, (v) => v);
 
   return (
     <motion.li
-      className="flex min-h-14 flex-1 items-center justify-between border-b border-line/80 px-8"
+      className="flex min-h-14 flex-1 items-center justify-between border-b border-black/[0.06] px-8"
       style={{ backgroundColor: wash }}
     >
       <span className="font-serif text-[1.65rem] leading-none text-ink">{material.name}</span>
       <motion.span
         aria-hidden
-        className="grid size-5 place-items-center rounded-full bg-ink text-canvas"
+        className="grid size-5 place-items-center rounded-full bg-primary text-on-primary"
         style={{ opacity: mark, scale: mark }}
       >
         <svg viewBox="0 0 12 12" className="size-3" fill="none">

@@ -42,9 +42,9 @@ export function SiteHeader() {
         initial={false}
         animate={{
           borderRadius: scrolled ? glassRadius : 0,
-          borderColor: scrolled ? "rgba(42,36,28,0.14)" : "rgba(42,36,28,0)",
+          borderColor: scrolled ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0)",
           boxShadow: scrolled
-            ? "0 1px 0 rgba(255,255,255,0.55) inset, 0 8px 28px rgba(42,36,28,0.08)"
+            ? "0 20px 40px rgba(0,0,0,0.03), 0 1px 2px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.04), 0 10px 20px rgba(0,0,0,0.04)"
             : "0 0 0 rgba(0,0,0,0)",
         }}
         transition={{ duration: 0.5, ease }}
@@ -68,8 +68,8 @@ export function SiteHeader() {
           animate={{ opacity: scrolled ? 1 : 0 }}
           transition={{ duration: 0.35, ease }}
         >
-          <div className="absolute inset-0 bg-[linear-gradient(165deg,rgba(255,253,249,0.52)_0%,rgba(250,247,242,0.34)_50%,rgba(245,238,228,0.4)_100%)] backdrop-blur-md" />
-          <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" />
+          <div className="absolute inset-0 bg-surface/88 backdrop-blur-md" />
+          <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent" />
         </motion.div>
 
         <div
