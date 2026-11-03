@@ -2,13 +2,24 @@
 
 import { motion } from "framer-motion";
 import { useLenis } from "lenis/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const glassRadius = 18;
 
+const homeLinks = [
+  { href: "/#discover", label: "Discover" },
+  { href: "/#knows", label: "Yours" },
+  { href: "/#names", label: "The names" },
+  { href: "/#edit", label: "The point" },
+] as const;
+
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const onPartners = pathname === "/partners";
 
   useLenis((lenis) => {
     const next = lenis.scroll > 16;
@@ -63,41 +74,41 @@ export function SiteHeader() {
 
         <div
           className={`relative grid w-full grid-cols-[1fr_auto] items-center transition-[padding,color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:grid-cols-3 ${
-            scrolled ? "px-5 py-3.5" : "mx-auto max-w-6xl px-6 py-5"
+            scrolled ? "px-5 py-3.5" : "px-5 py-5 sm:px-6"
           }`}
         >
-          <a
-            href="#top"
+          <Link
+            href="/"
             className={`font-serif text-[1.7rem] leading-none transition-colors duration-300 ${
               scrolled ? "text-ink" : "text-display"
             }`}
           >
             Lyra
-          </a>
+          </Link>
           <p
             className={`hidden justify-self-center text-[11px] tracking-[0.32em] uppercase transition-colors duration-300 sm:block ${
               scrolled ? "text-ink/70" : "text-ink-soft"
             }`}
           >
-            Autumn 26
+            {onPartners ? "For partners" : "Autumn 26"}
           </p>
           <nav
-            className={`flex items-center justify-end gap-5 text-[11px] tracking-[0.18em] uppercase transition-colors duration-300 sm:gap-7 ${
+            className={`flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-[11px] tracking-[0.18em] uppercase transition-colors duration-300 sm:gap-x-7 ${
               scrolled ? "text-ink/80" : "text-ink-soft"
             }`}
           >
-            <a href="#discover" className="hover:text-ink">
-              Discover
-            </a>
-            <a href="#knows" className="hover:text-ink">
-              Yours
-            </a>
-            <a href="#names" className="hover:text-ink">
-              The names
-            </a>
-            <a href="#edit" className="hover:text-ink">
-              The point
-            </a>
+            {homeLinks.map((link) => (
+              <Link key={link.href} href={link.href} className="hover:text-ink">
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href="/partners"
+              className={`hover:text-ink ${onPartners ? "text-ink" : ""}`}
+              aria-current={onPartners ? "page" : undefined}
+            >
+              Partners
+            </Link>
           </nav>
         </div>
       </motion.header>

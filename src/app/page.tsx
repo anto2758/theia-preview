@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { BrandMarquee } from "@/components/brand-marquee";
 import { KnowsYou } from "@/components/knows-you";
 import { PhoneStory } from "@/components/phone-story";
@@ -28,10 +30,6 @@ const chapters = [
 export default function Home() {
   return (
     <div className="relative overflow-x-clip text-ink">
-      {/* Impact ownership check — must appear in homepage HTML */}
-      <p className="sr-only" aria-hidden="true">
-        Impact-Site-Verification: 3000ddf6-dab5-43d3-bd30-a1ce1ef19731
-      </p>
       <SiteHeader />
 
       <main id="top" className="relative">
@@ -128,9 +126,14 @@ export default function Home() {
             </a>
           </address>
         </Reveal>
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 pb-8 text-sm text-ink-soft">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 pb-8 text-sm text-ink-soft">
           <p>Outfit discovery</p>
-          <p>Copenhagen</p>
+          <div className="flex gap-6 text-[11px] tracking-[0.18em] uppercase">
+            <Link href="/partners" className="hover:text-ink">
+              For partners
+            </Link>
+            <p className="normal-case tracking-normal">Copenhagen</p>
+          </div>
         </div>
       </footer>
     </div>
