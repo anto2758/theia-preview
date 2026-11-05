@@ -31,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-full font-sans">
+        <script type="text/javascript" src="https://s.skimresources.com/js/312348X1800937.skimlinks.js"></script>
         <MotionRoot>{children}</MotionRoot>
       </body>
     </html>
